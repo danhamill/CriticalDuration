@@ -22,4 +22,5 @@ python:
    - requirements: requirements-docs.txt
 
 python:
-  install: requirments.txt
+  install: 
+  - requirements: requirments.txt
