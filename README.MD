@@ -1,6 +1,12 @@
 # Critical Duration Analysis
 
-This project is designed to analyze critical duration events using hydrological data. It processes data from DSS files, calculates relevant metrics, and visualizes the results through interactive plots.
+This project is designed to analyze critical inflow volume duration events using hydrological data. It processes data from DSS files, calculates relevant metrics, and visualizes the results through interactive plots.
+
+The library calculated the volume window, a ration of the event volume to n-day unregulated volume durations.
+
+```math
+V_{window} = \frac{V_{Event}}{V_{n-day}}
+```
 
 ## Project Structure
 
@@ -32,6 +38,12 @@ To install the required dependencies, run:
 pip install -r requirements.txt
 ```
 
+If something is not working, it may be heplpful to install using
+
+```
+python setup.py develop
+```
+
 ## Usage
 
 To run the analysis, execute the following command:
@@ -55,6 +67,8 @@ Unit tests for the package can be found in the `tests` directory. To run the tes
 ```
 pytest tests/
 ```
+
+The test data used to validate the compuations came from HDR IPAST software.
 
 ## License
 

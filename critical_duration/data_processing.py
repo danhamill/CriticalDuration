@@ -15,6 +15,7 @@ def getCriticalDurationPlotData(
     Args:
         df (pd.DataFrame): DataFrame containing flow data with a 'flow' column.
         time_peak_stor (pd.Timestamp): Timestamp of the peak storage event.
+        durations (List[int]): List of durations (in days) for rolling volume calculations.
 
     Returns:
         pd.DataFrame: Transformed DataFrame with n-day rolling volumes, normalized values,
@@ -29,7 +30,6 @@ def getCriticalDurationPlotData(
         - Normalized volumes are calculated as the ratio of event volume to n-day volume.
         - Adds new columns for each n-day metric and prepares the DataFrame for visualization.
     """
-
     df, max_vols = volumeWindowCalculations(df, time_peak_stor, durations)
 
     df = df.stack()
@@ -46,6 +46,24 @@ def getCriticalDurationPlotData(
 def volumeWindowCalculations(
     df: pd.DataFrame, time_peak_stor: pd.Timestamp, durations: List[int]
 ) -> Tuple[pd.DataFrame, dict]:
+    """
+    Performs rolling volume calculations for specified durations and normalizes the results.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing flow data with a 'flow' column.
+        time_peak_stor (pd.Timestamp): Timestamp of the peak storage event.
+        durations (List[int]): List of durations (in days) for rolling volume calculations.
+
+    Returns:
+        Tuple[pd.DataFrame, dict]: 
+            - Updated DataFrame with rolling volume calculations.
+            - Dictionary containing normalized volumes for each duration.
+
+    Notes:
+        - Rolling averages are calculated for each duration.
+        - Normalized volumes are computed as the ratio of event volume to n-day volume.
+        - Adds new columns for each n-day metric and masks values outside the event window.
+    """
     max_vols = {}
     for n_day in durations:
         met = f"{n_day}".zfill(3) + "-day"
@@ -82,6 +100,27 @@ def getVolumeWindowData(
     pathElev: str,
     window: Tuple[str, str],
 ) -> Tuple[pd.DataFrame, NamedTuple]:
+    """
+    Extracts flow and elevation data from a DSS file and identifies critical times.
+
+    Args:
+        dss_file (str): Path to the DSS file.
+        sf (float): Scale factor for the analysis.
+        year (int): Year of the analysis.
+        ds_channel_capacity (int): Downstream channel capacity.
+        pathFlowIn (str): DSS path for inflow data.
+        pathFlowOut (str): DSS path for outflow data.
+        pathElev (str): DSS path for elevation data.
+        window (Tuple[str, str]): Time window for data extraction (start, end).
+
+    Returns:
+        Tuple[pd.DataFrame, NamedTuple]: 
+            - DataFrame containing inflow data.
+            - NamedTuple with critical times (time_peak_stor, time_ds_channel_exceed).
+
+    Raises:
+        AssertionError: If the DSS file or paths are invalid.
+    """
     sf = f"{sf:.2f}"
     assert len(str(year)) == 4, "Year must be 4 digit with format YYYY"
     assert os.path.exists(dss_file), f"Cannot locate DSS file {dss_file}"
@@ -127,6 +166,21 @@ def getVolumeWindowData(
 def readDssData(
     dss_file: str, path: str, variable: str, window: Tuple[str, str] = None
 ) -> pd.DataFrame:
+    """
+    Reads time-series data from a DSS file for a specified path and time window.
+
+    Args:
+        dss_file (str): Path to the DSS file.
+        path (str): DSS path in the format /A/B/C/D/E/F/.
+        variable (str): Variable name for the data (e.g., 'flow', 'elev').
+        window (Tuple[str, str], optional): Time window for data extraction (start, end).
+
+    Returns:
+        pd.DataFrame: DataFrame containing the extracted time-series data.
+
+    Raises:
+        AssertionError: If the DSS path format is invalid.
+    """
     assert len(path.split("/")) == 8, (
         f"Path must be in the format /A/B/C/D/E/F/, but is {path}"
     )
