@@ -33,7 +33,7 @@ jobs:
         sphinx-build -b html docs/ docs/_build/html  # Adjust paths based on your project structure
 
     - name: Upload documentation artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.2  # Specify a valid version
       with:
         name: documentation
-        path: docs/_build/html  # Path to the built documentation
+        path: docs/_build/html 
