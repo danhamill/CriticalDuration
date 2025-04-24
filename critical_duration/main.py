@@ -1,7 +1,7 @@
 from critical_duration.data_processing import getVolumeWindowData, getCriticalDurationPlotData
 from critical_duration.plotting import plot_volume_window
 import pandas as pd
-from typing import Tuple
+from typing import Tuple, List
 import os
 
 def criticalDurationAnalysis(
@@ -14,8 +14,10 @@ def criticalDurationAnalysis(
     window:Tuple[str, str],
     scale_factor: float,
     reservoir:str,
-    outputDirectory:str
+    outputDirectory:str,
+    durations: List[int]
 )-> pd.DataFrame:
+    
     # Get volume window data
     df, criticalTimes = getVolumeWindowData(
         dss_file,
@@ -25,11 +27,11 @@ def criticalDurationAnalysis(
         pathFlowIn,
         pathFlowOut,
         pathElev,
-        window,
+        window
     )
 
     # Calculate volume window volumes
-    df = getCriticalDurationPlotData(df, criticalTimes.time_peak_stor)
+    df = getCriticalDurationPlotData(df, criticalTimes.time_peak_stor, durations)
 
     plotWindow = [
         df.date.min().date().strftime("%Y-%m-%d"),
@@ -60,6 +62,8 @@ if __name__ == "__main__":
     window = tuple("01Dec2021 01:00, 10Dec2021 02:00".split(","))
     scaleFactors = list(range(5, 201, 5))
     collectionIDs = list(range(1, 41))
+    durations = [1, 2, 3, 5, 7]
+    outputDirectory = "outputs"
 
     output = pd.DataFrame()
     for collectionID, scaleFactor in zip(collectionIDs[1:], scaleFactors[1:]):
@@ -79,6 +83,8 @@ if __name__ == "__main__":
             window,
             scaleFactor,
             reservoir,
+            outputDirectory,
+            durations
         )
 
         output = pd.concat([output, df])

@@ -3,3 +3,4 @@
 outputs/
 critical_duration/__pycache__/
 tests/__pycache__/
+docs/_html/
