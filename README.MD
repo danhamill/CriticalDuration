@@ -8,7 +8,7 @@ The library calculated the volume window, a ration of the event volume to n-day 
 V_{window} = \frac{V_{Event}}{V_{n-day}}
 ```
 
-![method diagram](images/Volume_window_Diagram.png)
+![method diagram](/images/Volume_window_Diagram.png)
 
 ## Project Structure
 
