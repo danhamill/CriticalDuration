@@ -23,4 +23,4 @@ python:
 
 python:
   install: 
-  - requirements: requirments.txt
+  - requirements: requirements.txt
