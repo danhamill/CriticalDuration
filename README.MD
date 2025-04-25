@@ -2,7 +2,7 @@
 
 This project is designed to analyze critical inflow volume duration events using hydrological data. It processes data from DSS files, calculates relevant metrics, and visualizes the results through interactive plots.
 
-The library calculated the volume window, a ration of the event volume to n-day unregulated volume durations.
+The library calculated the volume window, a ratio of the event volume to n-day unregulated volume durations.
 
 [readthedocs](https://criticalduration.readthedocs.io/en/latest/)
 
@@ -11,6 +11,7 @@ V_{window} = \frac{V_{Event}}{V_{n-day}}
 ```
 
 ![method diagram](images/Volume_window_Diagram.png)
+[readthedocs](https://criticalduration.readthedocs.io/en/latest/)
 
 ## Project Structure
 
