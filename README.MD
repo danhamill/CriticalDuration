@@ -4,13 +4,12 @@ This project is designed to analyze critical inflow volume duration events using
 
 The library calculated the volume window, a ratio of the event volume to n-day unregulated volume durations.
 
-[readthedocs](https://criticalduration.readthedocs.io/en/latest/)
-
 ```math
 V_{window} = \frac{V_{Event}}{V_{n-day}}
 ```
 
 ![method diagram](images/Volume_window_Diagram.png)
+
 [readthedocs](https://criticalduration.readthedocs.io/en/latest/)
 
 ## Project Structure
