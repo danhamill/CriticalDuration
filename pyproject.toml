@@ -1,0 +1,45 @@
+[project]
+name = "CriticalDuration"
+version = "0.1.0"
+description = "A package for analyzing critical duration events in hydrological data."
+authors = [{name = "Daniel Hamill", email = "Daniel.D.Hamill@usace.army.mil"}]
+readme = "README.MD"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy>=1.26.4",
+  "pandas>=2.2.3",
+  "pydsstools>=2.3.2",
+  "altair>=5.5.0",
+  "openpyxl",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+docs = ["sphinx", "sphinx-autoapi", "sphinx-rtd-theme"]
+
+[project.scripts]
+run_analysis = "scripts.run_analysis:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["critical_duration"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "smoke: mark test as smoke test",
+  "regression: mark test as regression test",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
+docs = [
+  "sphinx",
+  "sphinx-autoapi",
+  "sphinx-rtd-theme",
+]

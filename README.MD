@@ -29,31 +29,54 @@ CriticalDuration
 ├── tests
 │   ├── __init__.py
 │   └── test_critical_duration.py
-├── setup.py
-├── requirements.txt
+├── pyproject.toml
+├── uv.lock
+├── .python-version
 └── README.md
 ```
 
 ## Installation
 
-To install the required dependencies, run:
+This project uses [uv](https://docs.astral.sh/uv/) for fast Python package and project management.
 
-```
-pip install -r requirements.txt
+### Prerequisites
+
+Install uv if you haven't already:
+
+```bash
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-If something is not working, it may be heplpful to install using
+### Install Dependencies
 
+Install the project and its dependencies:
+
+```bash
+uv sync
 ```
-python setup.py develop
+
+For development (includes testing dependencies):
+
+```bash
+uv sync --group dev
 ```
 
 ## Usage
 
 To run the analysis, execute the following command:
 
+```bash
+uv run python scripts/run_analysis.py
 ```
-python scripts/run_analysis.py
+
+Or use the console script:
+
+```bash
+uv run run_analysis
 ```
 
 Make sure to adjust the parameters in `run_analysis.py` as needed for your specific analysis.
@@ -68,11 +91,11 @@ Make sure to adjust the parameters in `run_analysis.py` as needed for your speci
 
 Unit tests for the package can be found in the `tests` directory. To run the tests, use:
 
-```
-pytest tests/
+```bash
+uv run pytest tests/
 ```
 
-The test data used to validate the compuations came from HDR IPAST software.
+The test data used to validate the computations came from HDR IPAST software.
 
 ## License
 
