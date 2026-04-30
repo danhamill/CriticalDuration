@@ -38,3 +38,8 @@ markers = [
 dev = [
     "pytest>=8.4.2",
 ]
+docs = [
+  "sphinx",
+  "sphinx-autoapi",
+  "sphinx-rtd-theme",
+]
